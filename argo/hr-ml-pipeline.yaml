@@ -1,0 +1,76 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: hr-ml-pipeline-
+spec:
+  # 1) Declare top-level workflow parameters
+  arguments:
+    parameters:
+      - name: ecr-repo-uri
+      - name: s3-bucket-name
+      - name: mode
+  
+  entrypoint: main
+
+  templates:
+  - name: main
+    steps:
+      - - name: initial-training
+          template: train-model
+          arguments:
+            parameters:
+              # USE workflow.parameters.* instead of inputs.parameters.*
+              - name: mode
+                value: "initial"
+              - name: ecr-repo-uri
+                value: "{{workflow.parameters.ecr-repo-uri}}"
+              - name: s3-bucket-name
+                value: "{{workflow.parameters.s3-bucket-name}}"
+              - name: initial-dataset-key
+                value: "data/Employee_Batch_0.csv"
+              - name: weekly-batch-keys
+                value: "data/Employee_Batch_1.csv,data/Employee_Batch_2.csv"
+
+      - - name: weekly-retrain
+          template: train-model
+          arguments:
+            parameters:
+              - name: mode
+                value: "weekly"
+              - name: ecr-repo-uri
+                value: "{{workflow.parameters.ecr-repo-uri}}"
+              - name: s3-bucket-name
+                value: "{{workflow.parameters.s3-bucket-name}}"
+              - name: initial-dataset-key
+                value: "data/Employee_Batch_0.csv"
+              - name: weekly-batch-keys
+                value: "data/Employee_Batch_1.csv,data/Employee_Batch_2.csv"
+
+  - name: train-model
+    inputs:
+      parameters:
+        - name: mode
+        - name: ecr-repo-uri
+        - name: s3-bucket-name
+        - name: initial-dataset-key
+        - name: weekly-batch-keys
+    container:
+      image: "{{inputs.parameters.ecr-repo-uri}}:latest"
+      command: [ "python", "train_model.py" ]
+      env:
+        - name: S3_BUCKET_NAME
+          value: "{{inputs.parameters.s3-bucket-name}}"
+        - name: INITIAL_DATASET_KEY
+          value: "{{inputs.parameters.initial-dataset-key}}"
+        - name: WEEKLY_BATCH_KEYS
+          value: "{{inputs.parameters.weekly-batch-keys}}"
+      args:
+        - --mode
+        - "{{inputs.parameters.mode}}"
+      volumeMounts:
+        - name: ml-pipeline-volume
+          mountPath: /tmp
+
+  volumes:
+    - name: ml-pipeline-volume
+      emptyDir: {}

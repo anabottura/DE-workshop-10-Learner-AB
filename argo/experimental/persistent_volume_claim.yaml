@@ -1,0 +1,13 @@
+#Experiment with this if you want to persist pod storage between workflow runs
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ml-pipeline-pvc
+spec:
+  storageClassName: ""
+  volumeName: s3-pv        # <-- Tells the PVC to bind the exact PV named "s3-pv"
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi

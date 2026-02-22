@@ -1,0 +1,632 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Level 5 Data Engineer Workshop 10: Conducting Your Data Orchestration &#8212; DE5 Workshop 10</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'intro';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="DE5 WS10: Orchestration - TASK 1" href="Task_1.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/Corndel_Logos_RGB_Logo.png" class="logo__image only-light" alt="DE5 Workshop 10 - Home"/>
+    <script>document.write(`<img src="_static/Corndel_Logos_RGB_Logo.png" class="logo__image only-dark" alt="DE5 Workshop 10 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Task_1.html">DE5 WS10: Orchestration - TASK 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Task_2.html">DE5 WS10: Orchestration - TASK 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Task_3.html">DE5 WS10: Orchestration - TASK 3</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/intro.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Level 5 Data Engineer Workshop 10: Conducting Your Data Orchestration</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task-0-read-the-following-introduction-and-motivation-for-this-month-s-topic">Task 0: Read the Following Introduction and Motivation for this Month’s Topic</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reminder-of-workshop-9-advanced-stream-processing">🔙 Reminder of Workshop 9 — Advanced Stream Processing 🔙</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-for-learners">Question for learners 🙋</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#orchestration-with-eks-and-argo-whats-different-now">Orchestration with EKS and Argo — What’s Different Now ⁉️</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#but-what-the-heck-are-containers-really">But what the heck are containers, really?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#but-what-the-heck-is-orchestration-really">But what the heck is orchestration, really?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-business-blueprint-analogy">1. The Business Blueprint Analogy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-kitchen-conductor-analogy">2. The Kitchen Conductor Analogy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-train-system-analogy">3. The Train System Analogy</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-elements-of-orchestration-in-data-engineering">Key Elements of Orchestration in Data Engineering</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applying-orchestration-in-practice">Applying Orchestration in Practice</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moving-forward-with-your-learning">Moving Forward With Your Learning</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alignment-with-data-engineer-pass-descriptors">Alignment with Data Engineer Pass Descriptors 📖📖📖</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ready-for-todays-workshop-scenario-and-objectives">Ready for Today’s Workshop Scenario and Objectives? ✔️✅☑️</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="level-5-data-engineer-workshop-10-conducting-your-data-orchestration">
+<h1>Level 5 Data Engineer Workshop 10: Conducting Your Data Orchestration<a class="headerlink" href="#level-5-data-engineer-workshop-10-conducting-your-data-orchestration" title="Link to this heading">#</a></h1>
+<section id="task-0-read-the-following-introduction-and-motivation-for-this-month-s-topic">
+<h2>Task 0: Read the Following Introduction and Motivation for this Month’s Topic<a class="headerlink" href="#task-0-read-the-following-introduction-and-motivation-for-this-month-s-topic" title="Link to this heading">#</a></h2>
+<section id="reminder-of-workshop-9-advanced-stream-processing">
+<h3>🔙 Reminder of Workshop 9 — Advanced Stream Processing 🔙<a class="headerlink" href="#reminder-of-workshop-9-advanced-stream-processing" title="Link to this heading">#</a></h3>
+<p>In your previous <strong>Workshop 9</strong>, we introduced advanced streaming pipelines, focusing on how data could be ingested in near real time for downstream analytics. We explored the benefits of real-time ingestion, best practices for setting up data streams, and the fundamentals of building a “continuously updating” data platform.</p>
+<p>We will be building on this prior knowledge of <strong>ingestion</strong> in our current workshop to simulate updates to Machine Learning datasets in a real-world HR environment.</p>
+</section>
+<section id="question-for-learners">
+<h3>Question for learners 🙋<a class="headerlink" href="#question-for-learners" title="Link to this heading">#</a></h3>
+<p>Can you think of a scenario where streaming alone isn’t enough, and a more generalised orchestration layer becomes essential?</p>
+<p><em>Hint: Consider situations where different data sources need to be synchronised.</em></p>
+</section>
+<section id="orchestration-with-eks-and-argo-whats-different-now">
+<h3>Orchestration with EKS and Argo — What’s Different Now ⁉️<a class="headerlink" href="#orchestration-with-eks-and-argo-whats-different-now" title="Link to this heading">#</a></h3>
+<p>In this new workshop (Workshop 10), we shift from stream processing to end-to-end orchestration for a machine learning (ML) workflow. Rather than focusing on continuous data ingestion, we’ll emphasise how to automate and manage container-based tasks in AWS for the HR Attrition(*) use case that your PDE will have helped you explore (see: session slides).</p>
+<p><em>(*) HR Attrition simply means staff turnover</em></p>
+<p>Think about stages like data cleansing, feature engineering, model training, and model evaluation, all running as containers with dependencies on each other. These stages are required because: (a) HR data normally comes from disparate sources, and a considerable amount of “data wrangling” is needed to make it usable; and (b) machine learning often requires some trial and error to get right when building a new model.</p>
+<p>Our scenario involves the weekly retraining of a decision-tree model, which needs to fetch new data, run transformations, train, validate, and deploy the model. Streaming only handles the data arrival, but not the multi-step, container-based tasks with dependencies.</p>
+</section>
+</section>
+<section id="but-what-the-heck-are-containers-really">
+<h2>But what the heck are containers, really?<a class="headerlink" href="#but-what-the-heck-are-containers-really" title="Link to this heading">#</a></h2>
+<p>Containers are technologies that allow the packaging and isolation of applications with their entire runtime environment. Essentially, you can think of them as being like lightweight virtual machines. They are useful to make different applications and services independent of each other. These independent apps/services are often called microservices, because they’re so lightweight and “microscopic”. So in your HR case study, you could have a system that relies on two containerised microservices - for example - an ingestion microservice running its own container, and also a notification-sending microservice running in its separate very own container.</p>
+<p>🔙You may remember that when you completed the introductory SQL exercises in unit <em>“2.1 Core SQL and Python for Data Engineering”</em>, we introduced you to ECR - Amazon’s elastic container registry. In that module, you used PgAdmin, which ran in a so-called “Docker container”, and ECR was used to register, manage and deploy the container image.🔙</p>
+</section>
+<section id="but-what-the-heck-is-orchestration-really">
+<h2>But what the heck is orchestration, really?<a class="headerlink" href="#but-what-the-heck-is-orchestration-really" title="Link to this heading">#</a></h2>
+<p>Orchestration is fast becoming the bread and butter of Data Engineering so let’s try and explain what it is! Imagine you have a detailed flowchart showing how different business tasks should work together (for example, sales, dispatch, and invoicing). That flowchart is like a blueprint; it illustrates what ought to happen and in what order, but it does not automatically set the processes in motion. You need someone (or something) to read that blueprint, trigger each task at the proper moment, and ensure everything is executed correctly, even if one task falters. In data engineering, that someone is known as an <strong>orchestrator</strong>, and normally it’s a program, not a human person.</p>
+<p>Below are a few ways to understand orchestration:</p>
+<section id="the-business-blueprint-analogy">
+<h3>1. The Business Blueprint Analogy<a class="headerlink" href="#the-business-blueprint-analogy" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Blueprint versus Execution:</strong><br />
+Think of a business process diagram drawn on paper or in software. It maps out how processes like order fulfilment should occur. However, simply drawing the diagram will not set orders rolling or ensure invoices are dispatched.</p></li>
+<li><p><strong>Orchestration Role:</strong><br />
+Orchestration is like appointing a dedicated operations manager who interprets the diagram and then triggers tasks at the correct times, manages dependencies (ensuring dispatch happens after order confirmation), and retries tasks if something goes awry (for instance, reprocessing a failed invoice). In data engineering, an orchestration framework does that, and it uses containers to isolate different types of tasks.</p></li>
+</ul>
+</section>
+<section id="the-kitchen-conductor-analogy">
+<h3>2. The Kitchen Conductor Analogy<a class="headerlink" href="#the-kitchen-conductor-analogy" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Kitchen Workflow:</strong><br />
+Imagine a bustling restaurant kitchen in a cosy market town. Several chefs are working on different parts of a meal (starters, main courses, puddings).</p></li>
+<li><p><strong>Orchestration Role:</strong><br />
+The head chef (or kitchen manager) coordinates the timing, ensuring that the starter is ready to be served before the main course arrives, manages dependencies by making sure that the sauce is prepared before it is needed on the dish, and addresses any mishaps swiftly (say, if a dish does not come out quite right) so that service remains smooth.<br />
+Similarly, an orchestrator in data engineering coordinates various jobs (data extraction, transformation, loading) so that the overall process runs seamlessly. This is an example of orchestration using <em>workflows</em>.</p></li>
+</ul>
+</section>
+<section id="the-train-system-analogy">
+<h3>3. The Train System Analogy<a class="headerlink" href="#the-train-system-analogy" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Train Scheduling:</strong><br />
+Consider Network Rail, where trains need to arrive, depart, and switch tracks at precisely the right moments. A central scheduling system is indispensable to avoid delays and mishaps.</p></li>
+<li><p><strong>Orchestration Role:</strong><br />
+In data workflows, the orchestrator functions like the railway scheduling centre by scheduling tasks (ensuring each train is on time), managing dependencies (making certain that one train waits until the previous one has safely departed), and handling errors (rerouting or retrying tasks if a train or process is delayed). All these tasks are containerised.</p></li>
+</ul>
+</section>
+</section>
+<section id="key-elements-of-orchestration-in-data-engineering">
+<h2>Key Elements of Orchestration in Data Engineering<a class="headerlink" href="#key-elements-of-orchestration-in-data-engineering" title="Link to this heading">#</a></h2>
+<p>From the examples above, we can identify the key elements of an effective orchestration framework:</p>
+<ul class="simple">
+<li><p><strong>Scheduling and Automation:</strong><br />
+The orchestrator automatically initiates containerised tasks based on a predetermined timetable or specific events (such as the arrival of a new data file).</p></li>
+<li><p><strong>Dependency Management:</strong><br />
+It ensures containerised tasks are executed in the proper sequence; for example, data must be extracted before it can be transformed and loaded.</p></li>
+<li><p><strong>Error Handling and Recovery:</strong><br />
+If a containerised task fails, the orchestrator can automatically attempt a retry, alert an engineer, or execute a contingency process.</p></li>
+<li><p><strong>Resource Management:</strong><br />
+In a cluster or cloud environment, orchestration helps distribute containers with tasks across available resources, ensuring optimal performance without a hitch.</p></li>
+<li><p><strong>Monitoring and Logging:</strong><br />
+It keeps an eye on the progress of each task, logs outcomes, and provides dashboards to monitor the health of the workflow, making it easier to pinpoint and rectify issues.</p></li>
+<li><p><strong>Scalability and Resilience:</strong><br />
+An orchestrator supports scaling (running containers in parallel when possible) and builds resilient data pipelines.</p></li>
+</ul>
+</section>
+<section id="applying-orchestration-in-practice">
+<h2>Applying Orchestration in Practice<a class="headerlink" href="#applying-orchestration-in-practice" title="Link to this heading">#</a></h2>
+<p>We now see how <strong>Orchestration</strong> in data engineering is akin to the invisible conductor behind a well-rehearsed performance. Whether you are picturing a business process that requires a manager to execute its steps, a head chef in a bustling kitchen, or a railway scheduling centre keeping trains on time, orchestration ensures that each component of a complex data pipeline runs at the right moment, in the correct sequence, and recovers gracefully from any setbacks. It transforms static workflows (merely drawn diagrams) into dynamic, automated processes that keep your data flowing reliably.</p>
+<p>Let’s reflect on how Workshop 10’s orchestration approach might fit alongside the data pipeline patterns you’ve learned from your previous workshops:</p>
+<ol class="arabic simple">
+<li><p><strong>Workshop 9: Advanced Stream Processing</strong></p>
+<ul class="simple">
+<li><p><strong>What we did</strong>: Built real-time ingestion for continuous data flows.</p></li>
+<li><p><strong>Practical learning</strong>: Real-time data is powerful but may only address the <em>input</em> side; you still need to coordinate tasks like transformations, model retraining, or notifications.</p></li>
+</ul>
+</li>
+<li><p><strong>Workshop 10: Orchestration of ML Workflows (Today)</strong></p>
+<ul class="simple">
+<li><p><strong>What we’ll cover</strong>: Deploying containers to a Kubernetes cluster (EKS), scheduling multi-step jobs with Argo, managing ML tasks end-to-end.</p></li>
+<li><p><strong>Project question</strong>: If your data arrives in bursts (batch) or you need consistent multi-stage ML processes, how will you ensure tasks run reliably, in the correct sequence, with minimal manual intervention?</p></li>
+</ul>
+</li>
+</ol>
+<p>By layering orchestration on top of streaming or batch ingestion, you gain an entire <strong>MLOps</strong> approach that ensures your data-driven processes run consistently, reliably, and transparently. MLOps, or Machine Learning Operations, is a set of practices that help manage the machine learning (ML) lifecycle in data engineering.</p>
+<section id="moving-forward-with-your-learning">
+<h3>Moving Forward With Your Learning<a class="headerlink" href="#moving-forward-with-your-learning" title="Link to this heading">#</a></h3>
+<p>Today, we’re focusing on how to spin up, orchestrate, and <strong>monitor</strong> a container-based ML workflow for <strong>HR Employee Attrition</strong> (staff turnover). In particular:</p>
+<ol class="arabic simple">
+<li><p><strong>Docker &amp; ECR</strong>: Ensure your model container is built once, run anywhere, and versioned in ECR.</p></li>
+<li><p><strong>Kubernetes on EKS</strong>: Provide the core scheduling and resource management for container workloads.</p></li>
+<li><p><strong>Argo</strong>: Add the orchestration logic to chain tasks (data prep, model training, risk classification) in the correct order.</p></li>
+</ol>
+<p>Our scenario does not currently use streaming, but assumes that you are able to run batch data extracts on a schedule, then orchestrate ML tasks each night. With batch processing, the same data quality caveats apply as with streaming, with some differences (think: timeliness).</p>
+<p>(<em>Re-cap: What do we mean by data quality dimensions?</em>)</p>
+<p>Remember to review the slide decks (morning and afternoon to clarify certain areas that may still be confusing. Ask your PDE if you have any questions.)</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="alignment-with-data-engineer-pass-descriptors">
+<h2>Alignment with Data Engineer Pass Descriptors 📖📖📖<a class="headerlink" href="#alignment-with-data-engineer-pass-descriptors" title="Link to this heading">#</a></h2>
+<p>This workshop aligns with several IFATE Data Engineer Pass Descriptors:</p>
+<ul class="simple">
+<li><p><strong>(K8)</strong> Explains the deployment approaches for new data pipelines and automated processes.</p></li>
+<li><p><strong>(K6)</strong> Describes software development principles and DevOps practices, such as version control and CI/CD, relevant to data engineering.</p></li>
+<li><p><strong>(K20)</strong> Demonstrates knowledge of data engineering tools and how they are applied for container-based workflows.</p></li>
+<li><p><strong>(S15)</strong> Integrates tasks for on-demand, streaming, or scheduled data ingestion steps.</p></li>
+<li><p><strong>(B1, B2)</strong> Exhibits proactive collaboration and accountability, crucial when orchestrating multi-team pipelines in production.</p></li>
+<li><p><strong>(K8)</strong>: By automating deployments of EKS clusters, containers, and orchestrators, we demonstrate best practices for delivering robust data pipelines quickly and consistently.</p></li>
+<li><p><strong>(K6)</strong>: Emphasises DevOps-like approaches to data engineering—utilising version control, container registries, and CI/CD for rapid iteration.</p></li>
+<li><p><strong>(K20)</strong>: Container-based ML flows and the orchestration of tasks are among the “data engineering tools” that learners apply to their own organisations.</p></li>
+<li><p><strong>(S15)</strong>: “Optimises data ingestion processes” can also include orchestrated tasks that prepare data, schedule model training, or manage job dependencies in real time or on demand.</p></li>
+<li><p><strong>(B1, B2)</strong>: Demonstrating collaborative ways of working—coordinating data scientists, ML engineers, and platform teams—to ensure an orchestrated pipeline meets business requirements.</p></li>
+</ul>
+</section>
+<section id="ready-for-todays-workshop-scenario-and-objectives">
+<h2>Ready for Today’s Workshop Scenario and Objectives? ✔️✅☑️<a class="headerlink" href="#ready-for-todays-workshop-scenario-and-objectives" title="Link to this heading">#</a></h2>
+<p>So, do you feel ready for today’s workshop? In short, you’ll implement an orchestrated ML pipeline that retrains an HR Attrition (staff turnover) model regularly and publishes risk classifications to an S3 location. By the end, you will have:</p>
+<ul class="simple">
+<li><p><strong>Built</strong> a minimal EKS cluster and an ECR repository.</p></li>
+<li><p><strong>Packaged</strong> the HR model and training code as a container.</p></li>
+<li><p><strong>Scheduled</strong> or <strong>triggered</strong> ML tasks with Argo.</p></li>
+<li><p><strong>Demonstrated</strong> how to monitor container logs and pipeline success.</p></li>
+<li><p><strong>Reflected</strong> on how orchestration ensures repeatability, resilience, and traceability.</p></li>
+</ul>
+<p>This workshop gives you <strong>hands-on</strong> experience tying everything together: from Docker build → ECR push → Kubernetes deployments → orchestrating multi-step workflows → verifying logs and outcomes. You’ll see how each workshop concept (data ingestion, containerisation, cloud deployment) folds into a cohesive, production-like scenario.</p>
+<p>We focus on the <em>orchestration</em> aspect, not model accuracy. The ML steps are purposefully simplified to highlight how you’d schedule, manage, and monitor container-based tasks rather than produce a best-in-class HR model.</p>
+<p>Ready? Feel free to get started on Task 1!</p>
+</section>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="right-next"
+       href="Task_1.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">DE5 WS10: Orchestration - TASK 1</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task-0-read-the-following-introduction-and-motivation-for-this-month-s-topic">Task 0: Read the Following Introduction and Motivation for this Month’s Topic</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reminder-of-workshop-9-advanced-stream-processing">🔙 Reminder of Workshop 9 — Advanced Stream Processing 🔙</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-for-learners">Question for learners 🙋</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#orchestration-with-eks-and-argo-whats-different-now">Orchestration with EKS and Argo — What’s Different Now ⁉️</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#but-what-the-heck-are-containers-really">But what the heck are containers, really?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#but-what-the-heck-is-orchestration-really">But what the heck is orchestration, really?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-business-blueprint-analogy">1. The Business Blueprint Analogy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-kitchen-conductor-analogy">2. The Kitchen Conductor Analogy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-train-system-analogy">3. The Train System Analogy</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-elements-of-orchestration-in-data-engineering">Key Elements of Orchestration in Data Engineering</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applying-orchestration-in-practice">Applying Orchestration in Practice</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moving-forward-with-your-learning">Moving Forward With Your Learning</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alignment-with-data-engineer-pass-descriptors">Alignment with Data Engineer Pass Descriptors 📖📖📖</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ready-for-todays-workshop-scenario-and-objectives">Ready for Today’s Workshop Scenario and Objectives? ✔️✅☑️</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Corndel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

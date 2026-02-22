@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: train-model-config
+  namespace: default
+data:
+  S3_BUCKET_NAME: <S3_BUCKET_NAME>  # Replace <S3_BUCKET_NAME> with the actual bucket name from CloudFormation outputs

@@ -1,0 +1,100 @@
+name: Build and Deploy ML Orchestration
+
+on:
+  push:
+    branches:
+      - main
+      - staging
+  pull_request:
+    branches:
+      - main
+      - staging
+  workflow_dispatch:  # Allow manual triggering
+    inputs:
+      deploy_cloudformation:
+        description: 'Deploy CloudFormation stack'
+        required: false
+        default: 'false'
+
+jobs:
+  build:
+    name: Build and Run Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Lint and Validate CloudFormation (Minimal for Main)
+        run: |
+          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            echo "Skipping CloudFormation validation in main branch."
+          else
+            aws cloudformation validate-template --template-body file://CloudFormation_Orchestration.yaml
+          fi
+
+      - name: Run Python Linting (Minimal Validation for Main)
+        run: |
+          pip install flake8
+          flake8 --ignore=E501,E302,E305,W292,W293 docker/train_model.py
+
+  build-and-push:
+    name: Build and Push Docker Image to ECR (Only in Staging)
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/staging'
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::<YOUR_ACCOUNT_ID>:role/GitHubActionsRole
+          aws-region: us-east-1
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Extract CloudFormation Outputs (ECR Repo URI)
+        run: |
+          export ECR_URI=$(aws cloudformation describe-stacks --stack-name ws10-orch-eks-dev \
+          --query "Stacks[0].Outputs[?OutputKey=='EcrRepoUri'].OutputValue" --output text)
+          echo "ECR_URI=${ECR_URI}" >> $GITHUB_ENV
+
+      - name: Build Docker Image
+        run: |
+          cd docker
+          docker build -t ws10-orch-dev-repo .
+          docker tag ws10-orch-dev-repo:latest $ECR_URI:latest
+
+      - name: Push Docker Image to ECR
+        run: |
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_URI
+          docker push $ECR_URI:latest
+
+  cloudformation-deploy:
+    name: Deploy CloudFormation (Only in Staging)
+    runs-on: ubuntu-latest
+    needs: build-and-push
+    if: github.ref == 'refs/heads/staging' || github.event.inputs.deploy_cloudformation == 'true'
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::<YOUR_ACCOUNT_ID>:role/GitHubActionsRole
+          aws-region: us-east-1
+
+      - name: Validate CloudFormation Template
+        run: |
+          aws cloudformation validate-template --template-body file://CloudFormation_Orchestration.yaml
+
+      - name: Deploy CloudFormation Stack
+        run: |
+          aws cloudformation deploy --template-file CloudFormation_Orchestration.yaml \
+          --stack-name ws10-orch-eks-dev --capabilities CAPABILITY_NAMED_IAM

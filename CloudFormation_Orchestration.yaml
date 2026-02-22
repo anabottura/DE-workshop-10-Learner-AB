@@ -1,0 +1,276 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: |
+  CloudFormation Template for WS10 - Conducting Your Data Orchestration
+
+  This template deploys:
+   1. An S3 bucket for storing ML artifacts or data.
+   2. An Amazon ECR repository for container images.
+   3. A lightweight EKS cluster (in default VPC) to run orchestrations with Argo.
+   Notes:
+   This template is simplified for workshop demonstrations.
+   Ensure you use Subnet IDs from at least two different AZs for EKS setup
+   Production use should consider the following:
+   - Private subnets for security and isolation.
+   - NAT gateways to enable outbound internet traffic for private resources.
+   - Narrower IAM roles with least privilege for EKS and other resources.
+   - Additional configurations for resilience and scalability (e.g., auto-scaling groups, multiple node groups).
+   The `AWSServiceRoleForAmazonEKS` is assumed to exist as the service-linked role to simplify permissions.
+
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      - Label:
+          default: "Workshop Configuration"
+        Parameters:
+          - ProjectName
+          - EnvironmentName
+      - Label:
+          default: "Basic EKS Configuration"
+        Parameters:
+          - EksVersion
+          - DefaultSubnets
+    ParameterLabels:
+      ProjectName:
+        default: "Project Identifier (e.g. 'hr-ml')"
+      EnvironmentName:
+        default: "Environment (e.g. 'dev', 'test', 'prod')"
+      EksVersion:
+        default: "Kubernetes API Version"
+      DefaultSubnets:
+        default:  "Subnet IDs in at least two different AZs (Availability Zones)"
+
+Parameters:
+
+  ProjectName:
+    Type: String
+    Description: "Short code or name for the project"
+    Default: "ws10-orch"
+    AllowedPattern: '^[a-zA-Z0-9\-]+$'
+    ConstraintDescription: "May only contain letters, numbers, and hyphens."
+
+  EnvironmentName:
+    Type: String
+    Description: "Environment label (dev, test, prod)"
+    Default: "dev"
+    AllowedValues:
+      - dev
+      - test
+      - prod
+
+  EksVersion:
+    Type: String
+    Description: "Kubernetes version for your EKS cluster"
+    Default: "1.27"
+    AllowedValues:
+      - "1.23"
+      - "1.24"
+      - "1.25"
+      - "1.26"
+      - "1.27"
+      - "1.28"
+
+  DefaultSubnets:
+    Type: List<AWS::EC2::Subnet::Id>
+    Description: |
+      Comma-separated list of Subnet IDs in your default VPC.
+      Subnets must span at least two of the following availability zones:
+      us-east-1a, us-east-1b, us-east-1c, us-east-1d, us-east-1f.
+      Example: subnet-0123456789abcdef0,subnet-0987654321fedcba0
+
+Resources:
+
+  BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref MLArtifactsBucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: AllowNodeAccess
+            Effect: Allow
+            Principal:
+              AWS: !GetAtt NodeGroupRole.Arn
+            Action:
+              - s3:GetObject
+              - s3:ListBucket
+              - s3:PutObject      # Added permission for writing predictions from ML model
+            Resource:
+              - !Sub "arn:aws:s3:::${ProjectName}-${EnvironmentName}-ml-artifacts-${AWS::AccountId}"
+              - !Sub "arn:aws:s3:::${ProjectName}-${EnvironmentName}-ml-artifacts-${AWS::AccountId}/*"
+  
+  EKSIamRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: eks.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: EKSPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - ec2:*
+                  - ecr:*
+                  - eks:*
+                  - elasticloadbalancing:*
+                  - logs:*
+                Resource: "*"
+      RoleName: "CustomEKSRole"
+
+  NodeGroupRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: NodeGroupPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - ec2:*
+                  - ecr:*
+                  - eks:*
+                  - elasticloadbalancing:*
+                  - autoscaling:*
+                  - logs:*
+                Resource: "*"
+        - PolicyName: S3AccessPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:ListBucket
+                  - s3:PutObject      # Added permission for writing predictions from ML model
+                Resource:
+                  - !Sub "arn:aws:s3:::${ProjectName}-${EnvironmentName}-ml-artifacts-${AWS::AccountId}"
+                  - !Sub "arn:aws:s3:::${ProjectName}-${EnvironmentName}-ml-artifacts-${AWS::AccountId}/*"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+        - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+        - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+      RoleName: "CustomNodeGroupRole"
+
+
+
+  ########################################
+  # S3 Bucket for ML Artifacts
+  ########################################
+  MLArtifactsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "${ProjectName}-${EnvironmentName}-ml-artifacts-${AWS::AccountId}"
+      VersioningConfiguration:
+        Status: Enabled
+      LifecycleConfiguration:
+        Rules:
+          - Id: MoveToIAAfter30
+            Status: Enabled
+            Transitions:
+              - TransitionInDays: 30
+                StorageClass: STANDARD_IA
+          - Id: ExpireAfter180
+            Status: Enabled
+            ExpirationInDays: 180
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      Tags:
+        - Key: Name
+          Value: !Sub "${ProjectName}-ml-bucket-${EnvironmentName}"
+        - Key: Environment
+          Value: !Ref EnvironmentName
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Purpose
+          Value: "Workshop-ML-Orchestration"
+
+  ########################################
+  # ECR Repository
+  ########################################
+  ContainerRepo:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: !Sub "${ProjectName}-${EnvironmentName}-repo"
+      ImageScanningConfiguration:
+        ScanOnPush: true
+      Tags:
+        - Key: Name
+          Value: !Sub "${ProjectName}-repo-${EnvironmentName}"
+        - Key: Environment
+          Value: !Ref EnvironmentName
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Purpose
+          Value: "Workshop-Container-Images"
+
+  ########################################
+  # (Minimal) EKS Cluster
+  ########################################
+  MinimalEKSCluster:
+    Type: AWS::EKS::Cluster
+    Properties:
+      Name: !Sub "${ProjectName}-eks-${EnvironmentName}"
+      RoleArn: !GetAtt EKSIamRole.Arn
+      Version: !Ref EksVersion
+      ResourcesVpcConfig:
+        SubnetIds: !Ref DefaultSubnets
+        SecurityGroupIds: []
+
+  ########################################
+  # EKS Node Group
+  ########################################
+  MyNodeGroup:
+    Type: AWS::EKS::Nodegroup
+    Properties:
+      ClusterName: !Ref MinimalEKSCluster
+      NodeRole: !GetAtt NodeGroupRole.Arn  # Use the custom role created for EKS that can access S3
+      Subnets: !Ref DefaultSubnets
+      ScalingConfig:
+        DesiredSize: 2
+        MinSize: 1
+        MaxSize: 3
+      InstanceTypes:
+        - t3.medium
+      AmiType: AL2_x86_64
+
+Outputs:
+
+  ########################################
+  # Outputs
+  ########################################
+  S3BucketName:
+    Description: "Name of the S3 bucket for ML artifacts"
+    Value: !Ref MLArtifactsBucket
+
+  EcrRepoName:
+    Description: "Name of the ECR repository"
+    Value: !Ref ContainerRepo
+
+  EcrRepoUri:
+    Description: "URI of the ECR repository"
+    Value: !GetAtt ContainerRepo.RepositoryUri
+
+  EksClusterName:
+    Description: "Name of the minimal EKS cluster"
+    Value: !Ref MinimalEKSCluster
+
+  CloudFormationNotice:
+    Description: "Note: Production environments should add node groups, security groups, private subnets, etc."
+    Value: "Simplified for WS10 orchestration workshop"

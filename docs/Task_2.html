@@ -1,0 +1,809 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>DE5 WS10: Orchestration - TASK 2 &#8212; DE5 Workshop 10</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Task_2';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="DE5 WS10: Orchestration - TASK 3" href="Task_3.html" />
+    <link rel="prev" title="DE5 WS10: Orchestration - TASK 1" href="Task_1.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/Corndel_Logos_RGB_Logo.png" class="logo__image only-light" alt="DE5 Workshop 10 - Home"/>
+    <script>document.write(`<img src="_static/Corndel_Logos_RGB_Logo.png" class="logo__image only-dark" alt="DE5 Workshop 10 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Task_1.html">DE5 WS10: Orchestration - TASK 1</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">DE5 WS10: Orchestration - TASK 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Task_3.html">DE5 WS10: Orchestration - TASK 3</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Task_2.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>DE5 WS10: Orchestration - TASK 2</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task-2-deploying-and-testing-the-orchestration-workflow">⚙️ Task 2: Deploying and Testing the Orchestration Workflow 🚀</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-0-understanding-the-internals-of-the-argo-workflow-yaml-file">Step 0: Understanding the internals of the argo workflow YAML file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-not-just-use-train-model-directly"><strong>Why Not Just Use <code class="docutils literal notranslate"><span class="pre">train-model</span></code> Directly?</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-main-and-train-model-work-together"><strong>How <code class="docutils literal notranslate"><span class="pre">main</span></code> and <code class="docutils literal notranslate"><span class="pre">train-model</span></code> Work Together</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-upload-the-data-to-s3">Step 1: Upload the Data to S3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-push-the-ml-container-to-ecr">Step 2: Push the ML Container to ECR</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-deploy-argo-workflows">Step 3: Deploy Argo Workflows</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-deploying-and-submitting-the-workflow">Step 4: Deploying and Submitting the Workflow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring-your-workflow">Monitoring Your Workflow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-dive-into-our-hr-logic-and-context">Deep-dive into our HR Logic and Context</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-verify-the-output">Step 5: Verify the output</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="de5-ws10-orchestration-task-2">
+<h1>DE5 WS10: Orchestration - TASK 2<a class="headerlink" href="#de5-ws10-orchestration-task-2" title="Link to this heading">#</a></h1>
+<section id="task-2-deploying-and-testing-the-orchestration-workflow">
+<h2>⚙️ Task 2: Deploying and Testing the Orchestration Workflow 🚀<a class="headerlink" href="#task-2-deploying-and-testing-the-orchestration-workflow" title="Link to this heading">#</a></h2>
+</section>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<p>In this task, you will deploy and test an orchestration workflow using <strong>Argo Workflows</strong> on your <strong>EKS cluster</strong>. This will tie together the infrastructure resources from <strong>Task 1</strong>, your <strong>Docker container</strong> for the ML pipeline, and your orchestration logic. You will:</p>
+<ol class="arabic simple">
+<li><p>Upload the <strong>HR data files</strong> to your S3 bucket.</p></li>
+<li><p>Push the <strong>ML container</strong> to your ECR repository.</p></li>
+<li><p>Deploy <strong>Argo Workflows</strong> to the EKS cluster.</p></li>
+<li><p>Submit and verify the workflow execution.</p></li>
+<li><p>Review the predictions generated for HR.</p></li>
+</ol>
+</section>
+<section id="step-0-understanding-the-internals-of-the-argo-workflow-yaml-file">
+<h2>Step 0: Understanding the internals of the argo workflow YAML file<a class="headerlink" href="#step-0-understanding-the-internals-of-the-argo-workflow-yaml-file" title="Link to this heading">#</a></h2>
+<p>In the repo that you cloned, look inside <strong>argo/hr-ml-pipeline.yaml</strong>:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Template</p></th>
+<th class="head"><p>Purpose</p></th>
+<th class="head"><p>What It Does</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong><code class="docutils literal notranslate"><span class="pre">main</span></code></strong></p></td>
+<td><p><strong>Orchestration</strong></p></td>
+<td><p>Decides which tasks run and in what order.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong><code class="docutils literal notranslate"><span class="pre">train-model</span></code></strong></p></td>
+<td><p><strong>Execution Unit</strong></p></td>
+<td><p>Defines the specific container that runs the Python script.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>✅ <strong>In short:</strong></p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">main</span></code></strong> is the <em>conductor</em> of the workflow.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">train-model</span></code></strong> is the <em>actual work being done</em> inside a container.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">main</span></code> <strong>calls</strong> <code class="docutils literal notranslate"><span class="pre">train-model</span></code>, passing it all required parameters.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="why-not-just-use-train-model-directly">
+<h2><strong>Why Not Just Use <code class="docutils literal notranslate"><span class="pre">train-model</span></code> Directly?</strong><a class="headerlink" href="#why-not-just-use-train-model-directly" title="Link to this heading">#</a></h2>
+<p>You might wonder: <strong>“Why do we need <code class="docutils literal notranslate"><span class="pre">main</span></code>? Can’t we just submit <code class="docutils literal notranslate"><span class="pre">train-model</span></code>?”</strong></p>
+<p>Yes, but <strong>separating orchestration (<code class="docutils literal notranslate"><span class="pre">main</span></code>) from execution (<code class="docutils literal notranslate"><span class="pre">train-model</span></code>) has major benefits</strong>:<br />
+✅ <strong>Flexibility</strong> – In the future, <code class="docutils literal notranslate"><span class="pre">main</span></code> could orchestrate <strong>multiple tasks</strong> (e.g., data validation, training, deployment).<br />
+✅ <strong>Scalability</strong> – If you need <strong>parallel jobs</strong> or <strong>dependencies</strong>, <code class="docutils literal notranslate"><span class="pre">main</span></code> can handle it.<br />
+✅ <strong>Readability</strong> – Learners and engineers can <strong>easily see the workflow structure</strong> and modify it.</p>
+</section>
+<hr class="docutils" />
+<section id="how-main-and-train-model-work-together">
+<h2><strong>How <code class="docutils literal notranslate"><span class="pre">main</span></code> and <code class="docutils literal notranslate"><span class="pre">train-model</span></code> Work Together</strong><a class="headerlink" href="#how-main-and-train-model-work-together" title="Link to this heading">#</a></h2>
+<p>🔹 <strong>When you submit the workflow</strong>, Argo starts at <code class="docutils literal notranslate"><span class="pre">main</span></code>.<br />
+🔹 <code class="docutils literal notranslate"><span class="pre">main</span></code> tells Argo:</p>
+<ul class="simple">
+<li><p>“Run <code class="docutils literal notranslate"><span class="pre">train-model</span></code> <strong>with these parameters</strong>.”<br />
+🔹 Argo then <strong>spins up a container</strong> using the <code class="docutils literal notranslate"><span class="pre">train-model</span></code> template, passing the correct parameters.<br />
+🔹 The <strong>Python script inside the container runs the ML training process</strong>.</p></li>
+</ul>
+</section>
+<section id="step-1-upload-the-data-to-s3">
+<h2>Step 1: Upload the Data to S3<a class="headerlink" href="#step-1-upload-the-data-to-s3" title="Link to this heading">#</a></h2>
+<p>To simulate real-world weekly updates, the <code class="docutils literal notranslate"><span class="pre">data/</span></code> folder includes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Employee_Batch_0.csv</span></code> (initial dataset),</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Employee_Batch_1.csv</span></code> and <code class="docutils literal notranslate"><span class="pre">Employee_Batch_2.csv</span></code> (weekly updates).</p></li>
+</ul>
+<p>Copy the <code class="docutils literal notranslate"><span class="pre">data/</span></code> folder in your repository into your newly created S3 bucket.
+You should see all three .csv files listed.</p>
+<p><strong>Important: do not accidentally upload the csv files into the root of the bucket rather than copying the entire data folder. The csv files need to sit in the “data” folder</strong>.</p>
+<p>The end result should look as follows:</p>
+<p><img alt="Verifying S3 upload" src="_images/s3.png" /></p>
+<p>Remember to click Upload at the bottom of the screen or nothing will hapen!</p>
+</section>
+<section id="step-2-push-the-ml-container-to-ecr">
+<h2>Step 2: Push the ML Container to ECR<a class="headerlink" href="#step-2-push-the-ml-container-to-ecr" title="Link to this heading">#</a></h2>
+<p>The ML container contains the logic from train_model.py, which processes the datasets, trains the model, and outputs predictions.</p>
+<p>We suggest you work in a cloud shell (e.g., AWS CloudShell, select this from the search box).</p>
+<p><strong>Note: From 2021-08-13, GitHub is no longer accepting account passwords when authenticating Git operations. You need to add a PAT (Personal Access Token) instead, and you can follow the below method to add a PAT on your system. From your GitHub account, go to Settings → Developer Settings (at the very bottom!) → Personal Access Token → Tokens (classic) → Generate New Token (Give your password) → Fillup the form → click Generate token → Copy the generated Token, it will be something like ghp_sFhFsSHhTzMDreGRLjmks4Tzuzgthdvfsrta</strong></p>
+<p>In Cloud Shell, you need to configure the local GIT client with a username and email address:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="k">global</span> <span class="n">user</span><span class="o">.</span><span class="n">name</span> <span class="s2">&quot;your_github_username&quot;</span>
+<span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="k">global</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span> <span class="s2">&quot;your_github_email&quot;</span>
+<span class="n">git</span> <span class="n">config</span> <span class="o">-</span><span class="n">l</span>
+</pre></div>
+</div>
+<p>Once GIT is configured, we can begin using it to access GitHub. Clone the WS10 repository directly.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/Corndel/DE-workshop-10-PDE.git
+&gt; Cloning into `YOUR-REPOSITORY`...
+Username: &lt;type your username&gt;
+Password: &lt;type your password or personal access token (GitHub)
+</pre></div>
+</div>
+<p>Now cd into our docker folder and build the image</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">DE</span><span class="o">-</span><span class="n">workshop</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="n">PDE</span><span class="o">/</span><span class="n">docker</span><span class="o">/</span>
+<span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">ws10</span><span class="o">-</span><span class="n">orch</span><span class="o">-</span><span class="n">dev</span><span class="o">-</span><span class="n">repo</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p>Now:</p>
+<ul class="simple">
+<li><p>Retrieve the ECR Repository URI</p></li>
+</ul>
+<p>After deploying the CloudFormation stack, navigate to the Outputs tab in the AWS CloudFormation Console Look for the EcrRepoUri output, which should look something like:
+<strong><a class="reference external" href="http://654654587449.dkr.ecr.us-east-1.amazonaws.com/ws10-orch-dev-repo">654654587449.dkr.ecr.us-east-1.amazonaws.com/ws10-orch-dev-repo</a></strong></p>
+<p>You could copy this ECR Repo URI to a notepad, but you don’t have to. Why? Keep reading.</p>
+<p>Now this is really cool: Instead of accessing your copied URI from your notepad, ECR URI can be retrieved automatically with the value of EcrRepoUri from the CloudFormation outputs. You need to remember how you named your stack (most likely <strong>hr-ml_stack</strong>, which is a name we chose in Task 1). Now see below how to use the retrieved value to <strong>authenticate Docker with the ECR repository and push the Docker Image:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#N.B. The following command will only work after CF finished deploying all the resources. 
+#At that point &quot;Outputs&quot; become available in CF. 
+# Adjust if your stack name is different from ‘hr-ml-stack’.
+
+export ECR_URI=$(aws cloudformation describe-stacks --stack-name hr-ml-stack \
+--query &quot;Stacks[0].Outputs[?OutputKey==&#39;EcrRepoUri&#39;].OutputValue&quot; --output text)
+
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_URI
+docker tag ws10-orch-dev-repo:latest $ECR_URI:latest
+docker push $ECR_URI:latest
+</pre></div>
+</div>
+<p><strong>Wait! so what have I done exactly???</strong>
+<strong>Purpose:</strong>
+<em>The primary function of docker push is to transfer a Docker image (created from a Dockerfile) from your local machine to a remote registry.</em>
+<strong>Registry:</strong>
+<em>A Docker registry is a centralised storage system for container images. Docker Hub is a common public registry, but you can also use private registries like Amazon ECR, which we just did!</em></p>
+<p>To Verify the Push, Go to the ECR Console in AWS. You may have to wait a minute for it to appear.</p>
+<p>Navigate to the repository ws10-orch-dev-repo. You may have to refresh it once inside.</p>
+<p>Confirm that your image has been pushed successfully (image tag: latest).</p>
+<p>The digest (sha256 hash key) should be the same as the one printed in your console when pushing the image.</p>
+<p><strong><strong>👨‍🎓👨‍🎓👨‍🎓For learners aiming for a distinction, we recommend that you read more about hashing, hash functions and secure hash algorithms, in your own time!👨‍🎓👨‍🎓👨‍🎓</strong></strong></p>
+</section>
+<section id="step-3-deploy-argo-workflows">
+<h2>Step 3: Deploy Argo Workflows<a class="headerlink" href="#step-3-deploy-argo-workflows" title="Link to this heading">#</a></h2>
+<p><strong>Recommended: open a new CloudShell tab here.</strong></p>
+<ul class="simple">
+<li><p>In a new CloudShell tab, continue by installing <a class="reference external" href="https://helm.sh">Helm</a>, the package manager for Kubernetes</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">raw</span><span class="o">.</span><span class="n">githubusercontent</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">helm</span><span class="o">/</span><span class="n">helm</span><span class="o">/</span><span class="n">master</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">get</span><span class="o">-</span><span class="n">helm</span><span class="o">-</span><span class="mi">3</span> <span class="o">&gt;</span> <span class="n">get_helm</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">chmod</span> <span class="mi">700</span> <span class="n">get_helm</span><span class="o">.</span><span class="n">sh</span>
+<span class="o">./</span><span class="n">get_helm</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>You will now need to ask AWS to create a KUBECONFIG file for you, it’s a Kubernetes configuration file that will be used by Kubernetes-enabled services to read your cluster defaults. To do this, use the command <strong>aws eks update-kubeconfig –region YOUR_REGION –name CLUSTER_NAME</strong>, for example:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">aws</span> <span class="n">eks</span> <span class="n">update</span><span class="o">-</span><span class="n">kubeconfig</span> <span class="o">--</span><span class="n">region</span> <span class="n">us</span><span class="o">-</span><span class="n">east</span><span class="o">-</span><span class="mi">1</span> <span class="o">--</span><span class="n">name</span> <span class="n">ws10</span><span class="o">-</span><span class="n">orch</span><span class="o">-</span><span class="n">eks</span><span class="o">-</span><span class="n">dev</span>
+</pre></div>
+</div>
+<p>Remember to change the region and cluster name to fit your actual values.</p>
+<ul class="simple">
+<li><p>Now you can add <strong>argo</strong> repo to Helm and install argo.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="n">repo</span> <span class="n">add</span> <span class="n">argo</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">argoproj</span><span class="o">.</span><span class="n">github</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">argo</span><span class="o">-</span><span class="n">helm</span>
+<span class="n">helm</span> <span class="n">repo</span> <span class="n">update</span>
+<span class="n">helm</span> <span class="n">install</span> <span class="n">argo</span> <span class="n">argo</span><span class="o">/</span><span class="n">argo</span><span class="o">-</span><span class="n">workflows</span> <span class="o">--</span><span class="n">namespace</span> <span class="n">argo</span> <span class="o">--</span><span class="n">create</span><span class="o">-</span><span class="n">namespace</span>
+</pre></div>
+</div>
+<p>Congratulations! You installed <strong>Argo Workflows</strong> on your <strong>Kubernetes cluster</strong>, which means: ✅ <strong>The Argo Workflow Controller</strong> is running inside your cluster.</p>
+<p>✅ <strong>Argo’s UI, API, and workflow engine</strong> are now available inside Kubernetes.</p>
+<p>Now verify the installation</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>argo
+kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>argo<span class="w"> </span>-l<span class="w"> </span><span class="nv">app</span><span class="o">=</span>workflow-controller
+</pre></div>
+</div>
+<p>You should see pods like argo-server and workflow-controller running. ✅ But <strong>this does NOT install the Argo CLI on your local machine.</strong> You still need to install the Argo CLI (command line interface) to leverage all of Argo’s functionality from the shell:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Detect OS</span>
+<span class="n">ARGO_OS</span><span class="o">=</span><span class="s2">&quot;darwin&quot;</span>
+<span class="k">if</span> <span class="p">[[</span> <span class="n">uname</span> <span class="o">-</span><span class="n">s</span> <span class="o">!=</span> <span class="s2">&quot;Darwin&quot;</span> <span class="p">]];</span> <span class="n">then</span>
+  <span class="n">ARGO_OS</span><span class="o">=</span><span class="s2">&quot;linux&quot;</span>
+<span class="n">fi</span>
+
+<span class="c1"># Download the binary</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">sLO</span> <span class="s2">&quot;https://github.com/argoproj/argo-workflows/releases/download/v3.6.2/argo-$ARGO_OS-amd64.gz&quot;</span>
+
+<span class="c1"># Unzip</span>
+<span class="n">gunzip</span> <span class="s2">&quot;argo-$ARGO_OS-amd64.gz&quot;</span>
+
+<span class="c1"># Make binary executable</span>
+<span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="s2">&quot;argo-$ARGO_OS-amd64&quot;</span>
+
+<span class="c1"># Move binary to path</span>
+<span class="n">sudo</span> <span class="n">mv</span> <span class="s2">&quot;./argo-$ARGO_OS-amd64&quot;</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">argo</span>
+
+<span class="c1"># Test installation</span>
+<span class="n">argo</span> <span class="n">version</span>
+</pre></div>
+</div>
+<p>Before proceeding, you’ll apply a configuration file that fixes a permissions error in your Kubernetes cluster. This file grants the default service account the necessary rights to create and manage the <em>workflowtaskresults</em> resource required by Argo Workflows. Without these permissions, you’ll encounter a forbidden error that stops your workflows from running.</p>
+<p>In your terminal, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="n">DE</span><span class="o">-</span><span class="n">workshop</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="n">PDE</span><span class="o">/</span><span class="n">argo</span><span class="o">/</span><span class="n">argo</span><span class="o">-</span><span class="n">rbac</span><span class="o">.</span><span class="n">yaml</span>
+</pre></div>
+</div>
+<p>After applying the file, your workflow should run without issues. (RBAC in the file name above stands for Role-Based Access Control, which is the logic that Kubernetes uses to manage permissions.)</p>
+</section>
+<section id="step-4-deploying-and-submitting-the-workflow">
+<h2>Step 4: Deploying and Submitting the Workflow<a class="headerlink" href="#step-4-deploying-and-submitting-the-workflow" title="Link to this heading">#</a></h2>
+<p>** What is meant by ephemeral storage and how is it different from S3**</p>
+<p>Each workflow uses ephemeral storage by default. This means data generated by the containers inside the workflow will be lost when the pod terminates. However, since the ML pipeline fetches datasets from S3 on each run, we do not risk losing any important data in this use case. The “experimental” directory contains some inspiration should you want to experiment with other types of persistent (non-ephemeral) storage (in your own time).</p>
+<ul>
+<li><p><strong>Side-note: Deploying the Workflow without argo (using <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">apply</span></code>):</strong>\</p>
+<p><em>It is important to understand the differences between “deploying” and “submitting” the workflow. In standard kubernetes, without argo, you would deploy, i.e. upload the entire workflow definition to your Kubernetes cluster using a standard Kubernetes command:</em></p>
+<p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">apply</span> <span class="pre">-f</span> <span class="pre">DE-workshop-10-PDE/argo/hr-ml-pipeline.yaml</span></code></p>
+<p><em>Essentially, after kubectl apply → Nothing happens, it just gets “deployed” or “stored”</em></p>
+</li>
+</ul>
+<p><strong>Actually submitting and running the Workflow using <code class="docutils literal notranslate"><span class="pre">argo</span> <span class="pre">submit</span></code>:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>The _submit_ method is provided by the Argo CLI and allows for dynamic parameter substitution. When you submit a workflow, not only does it get deployed (ephemerally), you can also override default parameters at runtime without modifying the YAML file. Most importantly, submitting is what actually kicks off your job (makes it run).
+(__NB. If you&#39;ve been experimenting with modifying the YAML file in the previous step, remember to change the workflow name parameter back from &#39;name&#39; to &#39;generateName&#39;__). 
+
+To submit the workflow, you will need to fetch two parameters from CloudFormation outputs (S3 identifier for the data bucket, and the URI for your ECR):
+
+  ```
+    # 1) Fetch CloudFormation outputs
+    # REMINDER: Edit the stack name if it differs from the one below!
+    # Adjust if your stack name is different from ‘hr-ml-stack’.
+
+    ECR_REPO_URI=$(aws cloudformation describe-stacks \
+        --stack-name hr-ml-stack \
+        --query &quot;Stacks[0].Outputs[?OutputKey==&#39;EcrRepoUri&#39;].OutputValue&quot; \
+        --output text)
+
+    S3_BUCKET_NAME=$(aws cloudformation describe-stacks \
+        --stack-name hr-ml-stack \
+        --query &quot;Stacks[0].Outputs[?OutputKey==&#39;S3BucketName&#39;].OutputValue&quot; \
+        --output text)
+
+   # 2) Submit the workflow, overriding default parameters, with the initial setting
+
+    argo submit DE-workshop-10-PDE/argo/hr-ml-pipeline.yaml \
+        -p ecr-repo-uri=$ECR_REPO_URI \
+        -p s3-bucket-name=$S3_BUCKET_NAME \
+        -p mode=initial
+  ```
+
+This command submits the workflow to the cluster and sets the `mode` parameter to `&quot;initial&quot;`, even if the YAML file has a different default value.
+
+Later, you will run the weekly mode instead of the initial mode: 
+
+```
+argo submit DE-workshop-10-PDE/argo/hr-ml-pipeline.yaml \
+      -p ecr-repo-uri=${ECR_REPO_URI} \
+      -p s3-bucket-name=${S3_BUCKET_NAME}
+      -p mode=weekly
+```
+
+(This command submits the workflow to the cluster and sets the `mode` parameter to `&quot;weekly&quot;`, even if the YAML file has a different default value.)
+</pre></div>
+</div>
+<p><strong>Key Points:</strong></p>
+<ul class="simple">
+<li><p>Runtime parameters make it easy to experiment with different scenarios.</p></li>
+<li><p>You can quickly switch between “initial” and “weekly” modes without editing the file.</p></li>
+</ul>
+<section id="monitoring-your-workflow">
+<h3>Monitoring Your Workflow<a class="headerlink" href="#monitoring-your-workflow" title="Link to this heading">#</a></h3>
+<p>You will need to monitor the workflow and the underlying pods. Use these commands to help with that:</p>
+<ul>
+<li><p><strong>List Active Workflows:</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">argo</span> <span class="pre">list</span></code></p>
+</li>
+<li><p><strong>Get Details of a Specific Workflow:</strong><br />
+Replace <code class="docutils literal notranslate"><span class="pre">&lt;workflow-name&gt;</span></code> with the name of the workflow from the list:</p>
+<p><code class="docutils literal notranslate"><span class="pre">argo</span> <span class="pre">get</span> <span class="pre">&lt;workflow-name&gt;</span></code></p>
+</li>
+<li><p><strong>Check Pod Status (for troubleshooting):</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">pods</span> <span class="pre">--all-namespaces</span></code></p>
+<p>If you see that any of your pods are stuck in <strong>pending</strong> state, you will need to troubleshoot by referring to the stuck pod, for example :</p>
+<p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">describe</span> <span class="pre">pod</span> <span class="pre">hr-ml-pipeline-f8hbz-train-model-3686676410</span> <span class="pre">-n</span> <span class="pre">default</span></code></p>
+<p>Once you fix any underlying issues, you can retry your workflow:</p>
+<p><code class="docutils literal notranslate"><span class="pre">argo</span> <span class="pre">retry</span> <span class="pre">&lt;workflow-name&gt;</span></code></p>
+</li>
+</ul>
+</section>
+<section id="deep-dive-into-our-hr-logic-and-context">
+<h3>Deep-dive into our HR Logic and Context<a class="headerlink" href="#deep-dive-into-our-hr-logic-and-context" title="Link to this heading">#</a></h3>
+<ul>
+<li><p><strong>HR Logic Overview:</strong><br />
+Review the Python code for the model and reflect on what it does <a class="github reference external" href="https://github.com/Corndel/DE-workshop-10-PDE/blob/main/docker/train_model.py">Corndel/DE-workshop-10-PDE</a> :</p>
+<p>The workflow is built around this code. In <strong>initial mode</strong>, the workflow uses historical HR data to build a baseline model. In <strong>weekly mode</strong>, it incorporates new data updates (such as changes in employee records) to retrain the model and keep predictions current.</p>
+</li>
+<li><p><strong>Experimenting with Modes:</strong><br />
+By using the Argo CLI’s runtime parameter substitution, you can easily switch between modes:</p>
+<ul class="simple">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">argo</span> <span class="pre">submit</span></code> to test how the model performs with only historical data (initial training).</p></li>
+<li><p>Switch to weekly mode to simulate a dynamic environment where the model updates as new HR data arrives.</p></li>
+</ul>
+</li>
+</ul>
+<p>These experiments will give you practical insight into how orchestration and continuous retraining work in a production-like setting.</p>
+<p><strong>To troubleshoot what could be going wrong inside a running container, use something like:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">logs</span> <span class="o">-</span><span class="n">n</span> <span class="n">default</span> <span class="n">hr</span><span class="o">-</span><span class="n">ml</span><span class="o">-</span><span class="n">pipeline</span><span class="o">-</span><span class="n">fhbq5</span><span class="o">-</span><span class="n">train</span><span class="o">-</span><span class="n">model</span><span class="o">-</span><span class="mi">2153528862</span> <span class="o">-</span><span class="n">c</span> <span class="n">main</span>
+</pre></div>
+</div>
+<p>Where the long name is the name of the kubernetes pod in which your workflow task is running.</p>
+</section>
+</section>
+<section id="step-5-verify-the-output">
+<h2>Step 5: Verify the output<a class="headerlink" href="#step-5-verify-the-output" title="Link to this heading">#</a></h2>
+<p>When the job finishes, using <code class="docutils literal notranslate"><span class="pre">argo</span> <span class="pre">get</span></code> should show you an output similar to the image below (notice the “Succeeded” status and the green ticks at the bottom.).</p>
+<p><img alt="Verifying resources" src="_images/success.png" /></p>
+<p>Next, Check Predictions in S3. Navigate to the S3 Console.</p>
+<p>The <em>output</em> directory should now have been created in your bucket! Verify the presence of <strong><em>output/attrition_predictions.csv</em></strong> in the bucket (e.g in <em>ws10-orch-dev-ml-artifacts-654654587449</em>.)</p>
+<p>Read inside the fie and think about how a Data Scientist would approach these results. Think about how you would collaborate with Data Scientists as a Data Engineer. Then think about how the business/HR would approach these results. Think about how you would collaborate with the business/HR as a Data Engineer.  How can these results be used to inform business strategy</p>
+<p>You will also want to inspect your Workflow Logs:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">argo</span> <span class="n">logs</span> <span class="o">&lt;</span><span class="n">workflow</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>In this task, you have:</p>
+<ul class="simple">
+<li><p>Uploaded the datasets to S3.</p></li>
+<li><p>Built and pushed the Docker image to ECR.</p></li>
+<li><p>Deployed Argo Workflows to your EKS cluster.</p></li>
+<li><p>Executed and verified the ML orchestration pipeline.</p></li>
+<li><p>This demonstrates a complete end-to-end orchestration setup, simulating a real-world ML workflow.</p></li>
+</ul>
+<p>Well done and Happy k8s’ing! (<strong>k8s</strong> is a short-hand for <strong>kubernetes</strong>, as the word <strong>kubernetes</strong> has 8 letters in the middle, between the initial <strong>k</strong> and the trailing <strong>s</strong>.)</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Task_1.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">DE5 WS10: Orchestration - TASK 1</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Task_3.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">DE5 WS10: Orchestration - TASK 3</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task-2-deploying-and-testing-the-orchestration-workflow">⚙️ Task 2: Deploying and Testing the Orchestration Workflow 🚀</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-0-understanding-the-internals-of-the-argo-workflow-yaml-file">Step 0: Understanding the internals of the argo workflow YAML file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-not-just-use-train-model-directly"><strong>Why Not Just Use <code class="docutils literal notranslate"><span class="pre">train-model</span></code> Directly?</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-main-and-train-model-work-together"><strong>How <code class="docutils literal notranslate"><span class="pre">main</span></code> and <code class="docutils literal notranslate"><span class="pre">train-model</span></code> Work Together</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-upload-the-data-to-s3">Step 1: Upload the Data to S3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-push-the-ml-container-to-ecr">Step 2: Push the ML Container to ECR</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-deploy-argo-workflows">Step 3: Deploy Argo Workflows</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-deploying-and-submitting-the-workflow">Step 4: Deploying and Submitting the Workflow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring-your-workflow">Monitoring Your Workflow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-dive-into-our-hr-logic-and-context">Deep-dive into our HR Logic and Context</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-verify-the-output">Step 5: Verify the output</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Corndel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

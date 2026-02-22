@@ -1,0 +1,627 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>DE5 WS10: Orchestration - TASK 3 &#8212; DE5 Workshop 10</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Task_3';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="DE5 WS10: Orchestration - TASK 2" href="Task_2.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/Corndel_Logos_RGB_Logo.png" class="logo__image only-light" alt="DE5 Workshop 10 - Home"/>
+    <script>document.write(`<img src="_static/Corndel_Logos_RGB_Logo.png" class="logo__image only-dark" alt="DE5 Workshop 10 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Task_1.html">DE5 WS10: Orchestration - TASK 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Task_2.html">DE5 WS10: Orchestration - TASK 2</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">DE5 WS10: Orchestration - TASK 3</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Task_3.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>DE5 WS10: Orchestration - TASK 3</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task-3-re-cap-and-optional-stretch-extend-with-github-actions">⚙️ Task 3: Re-cap and optional stretch/extend with GitHub Actions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workshop-objectives-recap">Workshop Objectives Recap ✔️</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wrapping-up-and-additional-resources">🏁 Wrapping Up and Additional Resources</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stretch-your-automation-with-github-actions">Stretch your automation with GitHub Actions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extra-notes-when-to-use-the-provided-build-and-push-sh-and-tear-down-sh-scripts">Extra notes: When to Use the provided build-and-push.sh and tear-down.sh scripts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-extension-examining-the-non-argo-kubernetes-yaml-files-in-the-repo">Optional Extension - Examining the non-Argo Kubernetes YAML files in the repo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-those-kubernetes-yaml-files-doing-in-kubernetes-in-github"><strong>1. What are those Kubernetes YAML Files Doing in “kubernetes/” in GitHub?</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#do-these-files-replace-my-argo-workflow"><strong>2. Do These Files Replace My Argo Workflow?</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#closer-look-at-configmap-yaml">Closer look at <code class="docutils literal notranslate"><span class="pre">configmap.yaml</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ingestion-service-yaml"><code class="docutils literal notranslate"><span class="pre">ingestion_service.yaml</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notification-service-yaml"><code class="docutils literal notranslate"><span class="pre">notification-service.yaml</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#persistent-volume-claim-yaml"><code class="docutils literal notranslate"><span class="pre">persistent_volume_claim.yaml</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#train-job-yaml"><code class="docutils literal notranslate"><span class="pre">train-job.yaml</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#thank-you">Thank you!</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="de5-ws10-orchestration-task-3">
+<h1>DE5 WS10: Orchestration - TASK 3<a class="headerlink" href="#de5-ws10-orchestration-task-3" title="Link to this heading">#</a></h1>
+<section id="task-3-re-cap-and-optional-stretch-extend-with-github-actions">
+<h2>⚙️ Task 3: Re-cap and optional stretch/extend with GitHub Actions<a class="headerlink" href="#task-3-re-cap-and-optional-stretch-extend-with-github-actions" title="Link to this heading">#</a></h2>
+</section>
+<section id="workshop-objectives-recap">
+<h2>Workshop Objectives Recap ✔️<a class="headerlink" href="#workshop-objectives-recap" title="Link to this heading">#</a></h2>
+<p>By the end of this task, you have:</p>
+<ul class="simple">
+<li><p>Deployed a minimal cloud infrastructure with CloudFormation.</p></li>
+<li><p>Configured a containerized ML pipeline in ECR and EKS.</p></li>
+<li><p>Verified the orchestration setup with Argo Workflows.</p></li>
+<li><p>Ran the HR ML pipeline and verified the predictions it generated.</p></li>
+</ul>
+</section>
+<section id="wrapping-up-and-additional-resources">
+<h2>🏁 Wrapping Up and Additional Resources<a class="headerlink" href="#wrapping-up-and-additional-resources" title="Link to this heading">#</a></h2>
+<p>In this workshop, you’ve learned how Data Engineers turn away from lots of ad-hoc scripts or one-off schedules towards a <strong>robust orchestrator</strong> that coordinates each stage of their pipelines, such as in the case of your HR Attrition ML workflow. You used a <strong>container image</strong> pushed to ECR, spun up ephemeral tasks on an EKS cluster that used that container image, and leveraged <strong>Argo</strong> to define dependencies, monitor runs, and handle any errors in the HR Workflow. The successful workflow run has generated useful predictions that can be used by HR to inform their strategy.</p>
+<ol class="arabic simple">
+<li><p><strong>Why Orchestration?</strong></p>
+<ul class="simple">
+<li><p>Consistent, repeatable ML processes</p></li>
+<li><p>Clear scheduling &amp; dependency management</p></li>
+<li><p>Easier troubleshooting &amp; auditing</p></li>
+</ul>
+</li>
+<li><p><strong>Integrating with Your Existing Projects</strong></p>
+<ul class="simple">
+<li><p>Combine orchestrated tasks with streaming or batch ingestion from prior workshops</p></li>
+<li><p>Incorporate more advanced tasks: data validation, multi-environment deployments, etc.</p></li>
+<li><p>Gradually refine security, networking, secrets management for a production-level solution</p></li>
+</ul>
+</li>
+<li><p><strong>Looking Ahead / Stretch Challenge 🏋️‍♂️</strong></p>
+<ul class="simple">
+<li><p>For your stretch/extend deliverables, consider how you’ll embed these orchestrations into a broader data platform.Consider how you might extend this pipeline:</p></li>
+<li><p>Adding steps for data validation or notifications.</p></li>
+<li><p>Enabling dynamic scaling of tasks based on resource usage.</p></li>
+<li><p>Experiment with more complex workflows involving branching and conditional logic.</p></li>
+</ul>
+</li>
+</ol>
+<p>Next steps might include even more advanced integrations/notifications, more robust partial re-trains on new data, or multi-model deployments.</p>
+<p>Take time to reflect on how orchestration can unify the pipeline building, container usage, scheduling, and best practices in data engineering. The skills you used—like Docker, EKS, CI/CD—build upon everything from the earlier workshops in a cohesive manner.</p>
+<p>Additional Resources</p>
+<ul class="simple">
+<li><p><strong>AWS EKS Documentation</strong>: <a class="reference external" href="https://docs.aws.amazon.com/eks/">https://docs.aws.amazon.com/eks/</a></p></li>
+<li><p><strong>Apache Airflow on Kubernetes</strong>: <a class="reference external" href="https://airflow.apache.org/docs/kubernetes.html">https://airflow.apache.org/docs/kubernetes.html</a></p></li>
+<li><p><strong>Argo Workflows</strong>: <a class="reference external" href="https://argoproj.github.io/argo-workflows/">https://argoproj.github.io/argo-workflows/</a></p></li>
+<li><p><strong>Docker Official Docs</strong>: <a class="reference external" href="https://docs.docker.com/">https://docs.docker.com/</a></p></li>
+</ul>
+<p>In a production environment, you’d typically add further layers: custom networking, locked-down IAM roles, integrated secrets, robust logging, and so on. This workshop focuses on the essential orchestrated ML pipeline with enough structure to be realistic yet remain teachable in a single session.</p>
+</section>
+<section id="stretch-your-automation-with-github-actions">
+<h2>Stretch your automation with GitHub Actions<a class="headerlink" href="#stretch-your-automation-with-github-actions" title="Link to this heading">#</a></h2>
+<p>GitHub Actions will be explored in your future e-learning very soon.</p>
+<p>If you found yourself having some extra time at the end of this workshop, keep reading (as a stretch/extend activity - it’s optional.)</p>
+<p>GitHub Actions are not really “orchestration”, they belong to the “CI/CD” category (continuous integration/continuous deployment), but <strong>both orchestration and CI/CD can be thought of as <em>automation</em></strong>. As a Data Engineer, you should familiarise yourself with different approaches to automation. Automation is what makes processes repeatable and manageable and maps directly to many of your KSBs.</p>
+<p>The Github Actions are included in your GitHub repo and free for you to experiment with as a stretch/extend activity for motivated learners. Most of them will only execute on the staging branch (ignored on main branch). Ensure that you replace &lt;YOUR_ACCOUNT_ID&gt; and &lt;YOUR_ACCOUNT_ID&gt; in the AWS credential steps to make your experiments successful.</p>
+<p>GitHub Actions is a continuous integration and continuous deployment (CI/CD) platform that allows you to automate your build, test, and deployment processes directly from your GitHub repository. In this workshop, we have included some GitHub Actions workflows as an optional stretch/extend activity for those who are keen to experiment further with automation. These workflows automatically run on the staging branch and are intentionally configured to be ignored on the main branch. This ensures that your primary codebase remains unaffected while you explore automation features.</p>
+<p><strong>The GitHub Actions workflows in this repository help automate tasks such as:</strong></p>
+<ul class="simple">
+<li><p>Linting and validating the CloudFormation templates.</p></li>
+<li><p>Running basic Python linting checks on the Docker scripts.</p></li>
+<li><p>Building and pushing the Docker image to Amazon ECR (Elastic Container Registry).</p></li>
+<li><p>Optionally deploying the CloudFormation stack to AWS.</p></li>
+</ul>
+<p>By experimenting with these actions, you will gain practical insights into how CI/CD pipelines work, and how automated processes can improve the reliability and speed of your development and deployment cycles.</p>
+<p>Reflect on how orchestration could be integrated with CI/CD automation in your enterprise, to make your own data pipelines more robust.</p>
+<p><strong>Configuration Requirements:</strong></p>
+<p>Remember that to successfully run these workflows, you must replace the placeholder &lt;YOUR_ACCOUNT_ID&gt; in the AWS credential steps with your actual AWS account ID. This change is necessary to ensure that the actions can authenticate with AWS and perform tasks such as logging into ECR and deploying CloudFormation stacks.</p>
+<p><em>Why Explore GitHub Actions?</em></p>
+<p>In a professional environment, automating build and deployment tasks is crucial. GitHub Actions is one of the many tools that can help streamline these processes, reducing manual errors and saving time Experimenting with GitHub Actions during this workshop will provide you with a real-world understanding of how CI/CD pipelines are set up and managed, which is a valuable skill in data engineering and DevOps (as well as MLOps) practices. Remember, examining GitHub Actions workflows is entirely optional, so if you’re not yet comfortable with CI/CD or GitHub Actions, you can focus on the primary workshop tasks and come back to these activities later.</p>
+</section>
+<section id="extra-notes-when-to-use-the-provided-build-and-push-sh-and-tear-down-sh-scripts">
+<h2>Extra notes: When to Use the provided <a class="reference external" href="http://build-and-push.sh">build-and-push.sh</a> and <a class="reference external" href="http://tear-down.sh">tear-down.sh</a> scripts<a class="headerlink" href="#extra-notes-when-to-use-the-provided-build-and-push-sh-and-tear-down-sh-scripts" title="Link to this heading">#</a></h2>
+<p>The build-and-push script is provided as a convenience for learners who wish to manually build the Docker image for the ML model and push it to your Amazon ECR repository. You might use this script if you prefer to work from the command line or if you want to verify the build process independently of the GitHub Actions workflows. Before running the script, ensure you have replaced the placeholder <your-ecr-repo-uri> with your actual ECR repository URI and <your-region> with your AWS region.</p>
+<p>The build-and-push script performs the following steps:</p>
+<ul class="simple">
+<li><p>Builds the Docker image using the Dockerfile in the repository.</p></li>
+<li><p>Tags the image with the appropriate ECR URI.</p></li>
+<li><p>Authenticates with ECR.</p></li>
+<li><p>Pushes the image to ECR so that it can be used by your Kubernetes deployments and Argo Workflows.</p></li>
+</ul>
+<p>The tear-down script is intended to help you clean up your AWS environment after the workshop. Once you have finished experimenting with the orchestration pipeline, you can use this script to delete the CloudFormation stack that was used to provision your AWS resources. This is particularly useful if you want to avoid incurring unnecessary costs or if you wish to start from scratch in a later session. Before running the script, ensure that the STACK_NAME variable is set to the name of the stack you wish to delete (for example, ws10-orch-stack).</p>
+</section>
+<section id="optional-extension-examining-the-non-argo-kubernetes-yaml-files-in-the-repo">
+<h2>Optional Extension - Examining the non-Argo Kubernetes YAML files in the repo<a class="headerlink" href="#optional-extension-examining-the-non-argo-kubernetes-yaml-files-in-the-repo" title="Link to this heading">#</a></h2>
+</section>
+<section id="what-are-those-kubernetes-yaml-files-doing-in-kubernetes-in-github">
+<h2><strong>1. What are those Kubernetes YAML Files Doing in “kubernetes/” in GitHub?</strong><a class="headerlink" href="#what-are-those-kubernetes-yaml-files-doing-in-kubernetes-in-github" title="Link to this heading">#</a></h2>
+<p>There are some extra Kubernetes files given to you to have a look at as a stretch/extend activity.</p>
+<ul class="simple">
+<li><p><strong>S3 Driver, Persistent Volume and Persistent Volume Claim (in the <em>experimental</em> folder)</strong><br />
+Defines persistent storage simulated on top of S3 that allows data to be retained between pods.</p></li>
+<li><p><strong>ConfigMaps (<code class="docutils literal notranslate"><span class="pre">configmap.yaml</span></code>, if any exists)</strong><br />
+Provides environment configurations for Kubernetes workloads.</p></li>
+<li><p><strong>Service files</strong><br />
+Defines microservices that could run persistently in Kubernetes: ingestion and notification jobs.</p></li>
+<li><p><strong>Train job</strong><br />
+Exposes the ML training job container to external or internal consumers.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="do-these-files-replace-my-argo-workflow">
+<h2><strong>2. Do These Files Replace My Argo Workflow?</strong><a class="headerlink" href="#do-these-files-replace-my-argo-workflow" title="Link to this heading">#</a></h2>
+<p><strong>No</strong>, they do <strong>not</strong> replace the Argo workflow but instead serve a <strong>different purpose</strong>:</p>
+<ul class="simple">
+<li><p><strong>Argo Workflows</strong> → Manages ML training as <strong>one-off, ephemeral workloads</strong> that get triggered manually or on a schedule.</p></li>
+<li><p><strong>Kubernetes Deployments &amp; Services</strong> → Keep a <strong>long-running</strong> container available in EKS.</p></li>
+</ul>
+<p>If you want to run your ML pipeline as <strong>a job that executes and terminates</strong>, use <strong>Argo Workflows</strong>.<br />
+If you need a <strong>service that stays up</strong> and allows users to query the trained model, <strong>use Kubernetes Deployments &amp; Services</strong> (this would be an extend/stretch activity as there is simply not enough time for you to experiment with this setup in the workshop.)
+Note: In train-job.yaml, ensure that the placeholder &lt;ECR_REPO_URI&gt; is replaced by the actual URI from your CloudFormation outputs.</p>
+<p><strong>Optional: a more in-depth explanation of the extra YAML files</strong>
+If you have some spare time after the workshop, you could experiment with several Kubernetes YAML files that help manage and orchestrate different components of our ML pipeline on the EKS cluster. These files work together to configure, deploy, and run extra services that you could develop - ranging from data ingestion to model training.</p>
+<section id="closer-look-at-configmap-yaml">
+<h3>Closer look at <code class="docutils literal notranslate"><span class="pre">configmap.yaml</span></code><a class="headerlink" href="#closer-look-at-configmap-yaml" title="Link to this heading">#</a></h3>
+<p>This file creates a Kubernetes <strong>ConfigMap</strong> named <code class="docutils literal notranslate"><span class="pre">train-model-config</span></code>. It stores essential configuration data (such as the S3 bucket name) that the ML training job needs. By referencing this ConfigMap, the training job can set environment variables dynamically, ensuring the container accesses the correct S3 bucket for its data. Make sure you update the values inside this file. (Note that if you’re using Argo, this config map is <strong>ignored</strong>).</p>
+</section>
+<section id="ingestion-service-yaml">
+<h3><code class="docutils literal notranslate"><span class="pre">ingestion_service.yaml</span></code><a class="headerlink" href="#ingestion-service-yaml" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">ingestion_service.yaml</span></code> file defines a Kubernetes <strong>Deployment</strong> for a simple data ingestion service. It is not a fully fledged service and serves as a POC (proof-of-concept). This POC service uses the AWS CLI image to copy data from an S3 bucket to a local directory within the pod. Although not part of the core ML pipeline, this deployment demonstrates how Kubernetes can automate data ingestion tasks and is useful for preparing data before processing.</p>
+</section>
+<section id="notification-service-yaml">
+<h3><code class="docutils literal notranslate"><span class="pre">notification-service.yaml</span></code><a class="headerlink" href="#notification-service-yaml" title="Link to this heading">#</a></h3>
+<p>This POC YAML file deploys a simulated <strong>notification service</strong>. In a real-world scenario, such a service might send alerts or trigger other processes when a job completes or if an error occurs. Here, it simply prints a message to confirm that a notification has been triggered, illustrating how notifications can be integrated into your orchestration workflow. This serves as inspiration for motivated learners to build something on top of this skeleton (think about ideas for your Endpoint Assessment Project!)</p>
+</section>
+<section id="persistent-volume-claim-yaml">
+<h3><code class="docutils literal notranslate"><span class="pre">persistent_volume_claim.yaml</span></code><a class="headerlink" href="#persistent-volume-claim-yaml" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">persistent_volume_claim.yaml</span></code> file defines a <strong>PersistentVolumeClaim (PVC)</strong> named <code class="docutils literal notranslate"><span class="pre">ml-pipeline-volume</span></code>. This PVC could be used by the ML training job to provide persistent storage (e.g. storage that won’t disappear after the job finishes running). Such storage is critical for holding  intermediate outputs generated between the training process and the re-training processes, ensuring data is retained even if the pod restarts. In Argo, we decided to ignore this file, as our ML model accesses S3 directly from its Python code.</p>
+</section>
+<section id="train-job-yaml">
+<h3><code class="docutils literal notranslate"><span class="pre">train-job.yaml</span></code><a class="headerlink" href="#train-job-yaml" title="Link to this heading">#</a></h3>
+<p>This file defines a Kubernetes <strong>Job</strong> that runs the ML training model as a one-off task.  Remember that this job is different from your Argo workflow, even if there are similarities. Key points include:</p>
+<ul class="simple">
+<li><p>The non-Argo job still references the same Docker image that you have built and pushed to your ECR repository.</p></li>
+<li><p>It sets environment variables (such as the S3 bucket name and output key) by referencing the <code class="docutils literal notranslate"><span class="pre">train-model-config</span></code> ConfigMap.</p></li>
+<li><p>The Job is designed to execute once, triggering the ML training process within the cluster.</p></li>
+</ul>
+<p>Each of these Kubernetes YAML files plays a specific role in orchestrating the overall workflow. Together, they demonstrate how to leverage Kubernetes for managing containerised applications in a production-like environment, without argo. Only focus on examining those optional files if you are confident with all the work you’ve done so far and need a challenge to stretch yourself. Remember they’re experimental and your PDE may be unable to fully assist. In the workshop, we do not use this job, we use the Argo equivalent.</p>
+</section>
+</section>
+<section id="thank-you">
+<h2>Thank you!<a class="headerlink" href="#thank-you" title="Link to this heading">#</a></h2>
+<p>Thank you for completing Workshop 10! Good luck with the rest of your Data Engineer journey!</p>
+<p>Remember: always think about how to re-use the KSBs you learn in these workshops, both for your job/work role, and for your EPA (endpoint assessment)!</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Task_2.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">DE5 WS10: Orchestration - TASK 2</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task-3-re-cap-and-optional-stretch-extend-with-github-actions">⚙️ Task 3: Re-cap and optional stretch/extend with GitHub Actions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workshop-objectives-recap">Workshop Objectives Recap ✔️</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wrapping-up-and-additional-resources">🏁 Wrapping Up and Additional Resources</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stretch-your-automation-with-github-actions">Stretch your automation with GitHub Actions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extra-notes-when-to-use-the-provided-build-and-push-sh-and-tear-down-sh-scripts">Extra notes: When to Use the provided build-and-push.sh and tear-down.sh scripts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-extension-examining-the-non-argo-kubernetes-yaml-files-in-the-repo">Optional Extension - Examining the non-Argo Kubernetes YAML files in the repo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-those-kubernetes-yaml-files-doing-in-kubernetes-in-github"><strong>1. What are those Kubernetes YAML Files Doing in “kubernetes/” in GitHub?</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#do-these-files-replace-my-argo-workflow"><strong>2. Do These Files Replace My Argo Workflow?</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#closer-look-at-configmap-yaml">Closer look at <code class="docutils literal notranslate"><span class="pre">configmap.yaml</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ingestion-service-yaml"><code class="docutils literal notranslate"><span class="pre">ingestion_service.yaml</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notification-service-yaml"><code class="docutils literal notranslate"><span class="pre">notification-service.yaml</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#persistent-volume-claim-yaml"><code class="docutils literal notranslate"><span class="pre">persistent_volume_claim.yaml</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#train-job-yaml"><code class="docutils literal notranslate"><span class="pre">train-job.yaml</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#thank-you">Thank you!</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Corndel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

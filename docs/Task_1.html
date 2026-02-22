@@ -1,0 +1,572 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>DE5 WS10: Orchestration - TASK 1 &#8212; DE5 Workshop 10</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Task_1';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="DE5 WS10: Orchestration - TASK 2" href="Task_2.html" />
+    <link rel="prev" title="Level 5 Data Engineer Workshop 10: Conducting Your Data Orchestration" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/Corndel_Logos_RGB_Logo.png" class="logo__image only-light" alt="DE5 Workshop 10 - Home"/>
+    <script>document.write(`<img src="_static/Corndel_Logos_RGB_Logo.png" class="logo__image only-dark" alt="DE5 Workshop 10 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">DE5 WS10: Orchestration - TASK 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Task_2.html">DE5 WS10: Orchestration - TASK 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Task_3.html">DE5 WS10: Orchestration - TASK 3</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Task_1.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>DE5 WS10: Orchestration - TASK 1</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task-1-deploying-and-configuring-the-orchestration-environment">⚙️ Task 1: Deploying and Configuring the Orchestration Environment</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#background-reading-on-docker-please-do-not-skip">Background Reading on Docker - Please do not skip!</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-you-ll-do-in-task-1">What you’ll do in Task 1:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deploying-via-cloudformation">Deploying via CloudFormation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verifying-resources">Verifying Resources</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="de5-ws10-orchestration-task-1">
+<h1>DE5 WS10: Orchestration - TASK 1<a class="headerlink" href="#de5-ws10-orchestration-task-1" title="Link to this heading">#</a></h1>
+<section id="task-1-deploying-and-configuring-the-orchestration-environment">
+<h2>⚙️ Task 1: Deploying and Configuring the Orchestration Environment<a class="headerlink" href="#task-1-deploying-and-configuring-the-orchestration-environment" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Goal</strong>: Spin up the minimal cloud resources needed for your orchestration pipeline.</p>
+</div></blockquote>
+<p><strong>High-level Agenda</strong></p>
+<ul class="simple">
+<li><p>You’ll deploy a <strong>comprehensive AWS environment</strong> using CloudFormation that sets the stage for an ML pipeline.</p></li>
+<li><p>We’ll then orchestrate a simple ML pipeline—pulling data from S3, training a <strong>decision tree</strong> model, and explore the results (predictions) of which employees are likely to leave the business.</p></li>
+</ul>
+<section id="background-reading-on-docker-please-do-not-skip">
+<h3>Background Reading on Docker - Please do not skip!<a class="headerlink" href="#background-reading-on-docker-please-do-not-skip" title="Link to this heading">#</a></h3>
+<p>If you haven’t yet read “Task 0 - Intro”, remember to start with that one. Also remember to review the morning slides and ask your PDE if you have any questions.</p>
+<p>In earlier parts of the programme, Docker fundamentals were not explicitly discussed, because you could do most of the tasks without containerisation. However, now that you’re moving towards complex data pipelines, Docker will become your daily staple. Docker is simply a framework for running containers. In Docker, you’ll be amazed and/or surprised to find out how simply you can run a single instance of your application with a command like <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">node.js</span></code>. That’s powerful and speedy, but very quickly you may run into issues:</p>
+<ul class="simple">
+<li><p>If your application load increases, you might try manually running <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code> many times on the same machine, but that’s not scalable.</p></li>
+<li><p>If one container crashes, you have to notice it yourself and redeploy.</p></li>
+<li><p>If the host itself fails, all containers on that machine become inaccessible.</p></li>
+</ul>
+<p>Maintaining multiple containers, monitoring their performance, and deciding when to scale them up or down can be time-consuming and prone to human error. For small-scale demos, this might be fine. But for <strong>production</strong> use cases—like an HR ML scenario that might involve tens or hundreds of containers over time—you need an automated solution. This is where Kubernetes and Argo come to rescue.</p>
+<p><strong>Open Container Initiative (OCI)</strong></p>
+<p>If you’re curious about container standards, the <strong>Open Container Initiative</strong> is a collaborative project hosted by the Linux Foundation, aimed at creating open industry standards around container formats and runtimes. Post-workshop, we encourage you to look into OCI. It explains how Docker images and other container tools can interoperate, ensuring consistency across different runtimes and vendors. Why would you want to do this? Standards are a powerful concept in data engineering, ensuring that your software stays compatible even when it migrates across teams or organisations. OCI is an example of such a standard.</p>
+</section>
+<section id="what-you-ll-do-in-task-1">
+<h3>What you’ll do in Task 1:<a class="headerlink" href="#what-you-ll-do-in-task-1" title="Link to this heading">#</a></h3>
+<p><strong>In Task 1</strong>, you will deploy:</p>
+<ol class="arabic simple">
+<li><p><strong>An ECR repository</strong> to store your ML container</p></li>
+<li><p><strong>A simple S3 bucket</strong> for model inputs/outputs</p></li>
+<li><p><strong>An EKS cluster</strong> to run orchestrators (Airflow, Argo) and your HR container tasks.</p></li>
+</ol>
+<p>The CloudFormation template from Workshop 10 was designed to remain minimal while referencing the same tagging approach and environment naming used in previous workshops to maintain continuity.</p>
+</section>
+<section id="deploying-via-cloudformation">
+<h3>Deploying via CloudFormation<a class="headerlink" href="#deploying-via-cloudformation" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Access the GitHub Repository</strong></p>
+<ul class="simple">
+<li><p>Assuming you have access to <code class="docutils literal notranslate"><span class="pre">https://github.com/Corndel/DE-workshop-10-PDE</span></code></p></li>
+<li><p>Navigate to <code class="docutils literal notranslate"><span class="pre">CloudFormation_Orchestration.yml</span></code></p></li>
+</ul>
+</li>
+<li><p><strong>Check Key Parameters - Important</strong></p>
+<ul class="simple">
+<li><p><strong>EnvironmentName</strong>: Typically <code class="docutils literal notranslate"><span class="pre">dev</span></code>, <code class="docutils literal notranslate"><span class="pre">test</span></code>, or <code class="docutils literal notranslate"><span class="pre">prod</span></code>.  This is to get you used to the idea of tagging deployments with names that specify whether they are meant for development, testing or production use! Choose wisely…</p></li>
+<li><p><strong>Subnets</strong>: we will need two subnets for deploying a Kubernetes cluster; if you are not familiar with the term subnetting, bookmark this resource for further reading: <a class="reference external" href="https://www.dnsstuff.com/subnet-ip-subnetting-guide">https://www.dnsstuff.com/subnet-ip-subnetting-guide</a></p></li>
+<li><p><strong>Subnets: warning</strong>: the quirk in AWS means that a Kubernetes control plane cannot be allowed to span across the availability zone <code class="docutils literal notranslate"><span class="pre">us-east-1e</span></code>. In the search bar of your cloud environment, go to VPC and then click on Subnets (right-click and open this in a new tab/window not to navigate away from CloudFormation). Find the availability zone <code class="docutils literal notranslate"><span class="pre">us-east1-e</span></code> and label the AZ associated with it with the name (tag) <code class="docutils literal notranslate"><span class="pre">donotuse</span></code> to make it easier to spot it later during the setup of our CloudFormation stack. <strong>Important: failing to do that, and later accidentally selecting an incorrect AZ, will cause your deployment to fail and will set you back 30-45 minutes!</strong></p></li>
+</ul>
+</li>
+<li><p><strong>Launch the Stack</strong></p>
+<ul class="simple">
+<li><p>Go to <strong>CloudFormation</strong> in the AWS Console → <strong>Create stack</strong> → <strong>With new resources (standard)</strong>.</p></li>
+<li><p>Provide the template file (either upload directly or point to your GitHub raw URL/S3 URL).</p></li>
+<li><p>Click on <strong>Next</strong>, provide <strong>Stack Name</strong> that you’ll remember (“hr-ml-stack”)</p></li>
+<li><p>On the <strong>Parameters</strong> page, fill in <code class="docutils literal notranslate"><span class="pre">ProjectName=ws10-orch</span></code>, <code class="docutils literal notranslate"><span class="pre">EnvironmentName=dev</span></code>, <code class="docutils literal notranslate"><span class="pre">EksVersion=1.27</span></code>.</p></li>
+<li><p>Pay attention to providing two subnets in two different AZs. Do not select the AZ you have just marked as <code class="docutils literal notranslate"><span class="pre">donotuse</span></code></p></li>
+<li><p>Acknowledge IAM resources if prompted.</p></li>
+<li><p>Click <strong>Create stack</strong>.</p></li>
+<li><p>The deployment will take around 15 minutes so the PDE will cover a number of slides with you during this waiting time.</p></li>
+</ul>
+</li>
+<li><p><strong>Monitor Deployment</strong></p>
+<ul class="simple">
+<li><p>Wait for the status to change to <strong>CREATE_COMPLETE</strong>.</p></li>
+<li><p>Go to the <strong>Outputs</strong> tab to retrieve the S3 bucket name, ECR repo URI, and EKS cluster name.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="verifying-resources">
+<h3>Verifying Resources<a class="headerlink" href="#verifying-resources" title="Link to this heading">#</a></h3>
+<p>You can verify your resources in CloudFormation in the Resources tab, you may have to scroll left or right using the arrows, as shown in the picture below:</p>
+<p><img alt="Verifying resources" src="_images/resources.png" /></p>
+<p>The following resources should be visible (NB. it may take up to 15 minutes to see your EKS cluster ready.)</p>
+<ol class="arabic simple">
+<li><p><strong>S3 Bucket</strong>: Named something like <code class="docutils literal notranslate"><span class="pre">ws10-orch-dev-ml-artifacts-&lt;account-id&gt;</span></code>.</p>
+<ul class="simple">
+<li><p>Confirm you see it in the <strong>S3</strong> console.</p></li>
+</ul>
+</li>
+<li><p><strong>ECR Repository</strong>: Named <code class="docutils literal notranslate"><span class="pre">ws10-orch-dev-repo</span></code>.</p>
+<ul class="simple">
+<li><p>Check in <strong>ECR</strong> under <strong>Repositories</strong>.</p></li>
+</ul>
+</li>
+<li><p><strong>EKS Cluster</strong>: Named <code class="docutils literal notranslate"><span class="pre">ws10-orch-eks-dev</span></code>.</p>
+<ul class="simple">
+<li><p>Check in the <strong>EKS</strong> console to see the cluster.</p></li>
+</ul>
+</li>
+<li><p><strong>IAM Roles</strong>: These were created to manage the necessary permissions.</p></li>
+</ol>
+<p><em>Reflection question: using your own independent research, investigate the meaning of “node groups” in the context of EKS</em></p>
+<p>You’ll see how to specify your environment name (dev/test/prod) and your project short code in the parameters, aligning with the style from the advanced workshop. This ensures your resources (EKS cluster name, ECR, S3) carry consistent naming and tagging patterns across all your workshops.</p>
+<p>The initial resources will be created quickly.</p>
+<p>The EKS cluster and the associated NodeGroup will take 10-15 minutes to finalise, focus on your slides during that time.</p>
+<p>When the EKS becomes active, continue with the next Task.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Level 5 Data Engineer Workshop 10: Conducting Your Data Orchestration</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Task_2.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">DE5 WS10: Orchestration - TASK 2</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task-1-deploying-and-configuring-the-orchestration-environment">⚙️ Task 1: Deploying and Configuring the Orchestration Environment</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#background-reading-on-docker-please-do-not-skip">Background Reading on Docker - Please do not skip!</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-you-ll-do-in-task-1">What you’ll do in Task 1:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deploying-via-cloudformation">Deploying via CloudFormation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verifying-resources">Verifying Resources</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Corndel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
