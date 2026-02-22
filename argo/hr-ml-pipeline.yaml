@@ -17,6 +17,7 @@ spec:
     steps:
       - - name: initial-training
           template: train-model
+          when: "{{workflow.parameters.mode}} == initial"
           arguments:
             parameters:
               # USE workflow.parameters.* instead of inputs.parameters.*
@@ -33,6 +34,7 @@ spec:
 
       - - name: weekly-retrain
           template: train-model
+          when: "{{workflow.parameters.mode}} == weekly"
           arguments:
             parameters:
               - name: mode
