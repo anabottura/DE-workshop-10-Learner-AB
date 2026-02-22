@@ -34,7 +34,7 @@ def update_datasets(initial_data, update_files, bucket_name):
         for _, row in update_data.iterrows():
             # Use the EmployeeNumber column as the unique identifier
             if row["EmployeeNumber"] in data["EmployeeNumber"].values:
-                data.loc[data["EmployeeNumber"] == row["EmployeeNumber"], :] = row
+                data.loc[data["EmployeeNumber"] == row["EmployeeNumber"], :] = row.values
             else:
                 data = pd.concat([data, pd.DataFrame([row])], ignore_index=True)
     return data
