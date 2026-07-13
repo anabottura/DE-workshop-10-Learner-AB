@@ -4,11 +4,6 @@ AWS estimates that a 30-minute outage at a major financial services company can 
 Google Cloud’s SLA guarantees 99.95% uptime—but do you know how they achieve that? **Orchestration**.
 Your data pipeline could cost your company thousands per minute if it goes down—so let’s make sure that never happens.
 
-The Jupyter Book for this workshop is here:
-
-https://jubilant-spoon-9j4139g.pages.github.io/intro.html
-
-
 # Data Engineer Workshop 10: Conducting Your Data Orchestration
 
 Materials:
@@ -22,13 +17,13 @@ Materials:
 
 We will be orchestrating retraining steps through ephemeral container workflows. It’s a perfect example of how a microservices + orchestration environment (Argo on EKS) simplifies repeated tasks and ensures your HR analytics pipeline stays up-to-date with minimal fuss.
 
-All the tasks are documented as separate chapters in your Jupyter Book (link at the top!). Suggested timings look as follows:
+All the tasks are documented as separate chapters in your repository. Suggested timings look as follows:
 
 ### **🕘 Duration**
 
--   **Morning Session**: 09:00 -- 12:30
--   **Lunch Break**: 12:30 -- 13:30
--   **Afternoon Session**: 13:30 -- 16:00
+-   **Morning Session**: 10:00 -- 13:00
+-   **Lunch Break**: 13:00 -- 14:00
+-   **Afternoon Session**: 14:00 -- 16:00
 
 * * * * *
 
@@ -71,10 +66,10 @@ To do that, navigate to the top of this document and click on the jupyter book U
 
 List of tasks.
 
--   **Task 0** (Intro): Read the **Introduction to Orchestration & MLOps**
--   **Task 1**: Deploy AWS resources using **CloudFormation & IAM** 
--   **Task 2**: Containerise ML models & orchestrate workflows with **EKS & Argo**
--   **Task 3**: Examine additional elements of your GitHub Repo
+-   **[Task 0](https://github.com/anabottura/DE-workshop-10-Learner-AB/blob/main/Task_0_INTRO.md)** (Intro): Read the **Introduction to Orchestration & MLOps** 
+-   **[Task 1](https://github.com/anabottura/DE-workshop-10-Learner-AB/blob/main/Task_1.md)**: Deploy AWS resources using **CloudFormation & IAM** 
+-   **[Task 2](https://github.com/anabottura/DE-workshop-10-Learner-AB/blob/main/Task_2.md)**: Containerise ML models & orchestrate workflows with **EKS & Argo**
+-   **[Task 3](https://github.com/anabottura/DE-workshop-10-Learner-AB/blob/main/Task_3_Wrapping_Up.md)**: Examine additional elements of your GitHub Repo
 
 * * * * *
 
@@ -84,5 +79,3 @@ List of tasks.
 -   **Portability**: Managing ML workflows in containers with Docker & Kubernetes.
 -   **Automation**: Orchestrating workflows with Argo & CI/CD.
 -   **Monitoring & Debugging**: Retrieving logs, tracking model predictions.
-
-Now navigate to the top of this document and click on the jupyter book URL (link) provided. Good luck!
